@@ -6,7 +6,7 @@ use pkg_config;
 const MIN_LIBVLC_VERSION: &str = "3.0.0";
 
 #[cfg(feature = "bindgen")]
-fn generate_bindings() {
+fn generate_bindings(library: &pkg_config::Library) {
     println!("cargo:rerun-if-changed=wrapper.h");
 
     let mut bindings = bindgen::Builder::default()
@@ -22,9 +22,8 @@ fn generate_bindings() {
         .allowlist_function("vsnprintf")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()));
 
-    // Set header include paths
-    let pkg_config_library = pkg_config::Config::new().probe("libvlc").unwrap();
-    for include_path in &pkg_config_library.include_paths {
+    // Set header include paths from the pkg-config probe.
+    for include_path in &library.include_paths {
         bindings = bindings.clang_arg(format!("-I{}", include_path.display()));
     }
 
@@ -167,21 +166,26 @@ mod windows {
 }
 
 fn main() {
+    // Probe once and reuse the result for both binding generation (include
+    // paths) and linking (pkg-config emits the link directives on success).
+    let library = probe_libvlc();
+
     // Binding generation
     #[cfg(feature = "bindgen")]
-    generate_bindings();
+    generate_bindings(library.as_ref().expect(
+        "pkg-config is required to locate the libvlc headers with the `bindgen` feature",
+    ));
 
     #[cfg(not(feature = "bindgen"))]
     copy_pregenerated_bindings();
 
-    // Link
-    if let Err(err) = probe_libvlc() {
+    // Link. On success pkg-config has already emitted the link directives; only
+    // the failure path needs handling.
+    if let Err(err) = library {
         #[cfg(target_os = "windows")]
         windows::link_vlc();
 
         #[cfg(not(target_os = "windows"))]
         panic!("libvlc (>= {}) not found: {:?}", MIN_LIBVLC_VERSION, err);
     }
-
-    println!("cargo:rustc-link-lib=vlc");
 }
