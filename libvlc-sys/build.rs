@@ -1,53 +1,7 @@
-use std::env;
-use std::path::PathBuf;
-use pkg_config;
+//! Build script for `libvlc-sys`, locates and links libvlc.
 
 /// Minimum supported libvlc version.
 const MIN_LIBVLC_VERSION: &str = "3.0.0";
-
-#[cfg(feature = "bindgen")]
-fn generate_bindings(library: &pkg_config::Library) {
-    println!("cargo:rerun-if-changed=wrapper.h");
-
-    let mut bindings = bindgen::Builder::default()
-        .header("wrapper.h")
-        // For no_std
-        .use_core()
-        // Use libc
-        .ctypes_prefix("libc")
-        // Allowlist every (lib)vlc symbol.
-        .allowlist_item("(lib|LIB)?(vlc|VLC)_.*")
-        // Required by the Windows `legacy_stdio_definitions` link workaround
-        // (see `windows::link_vlc`).
-        .allowlist_function("vsnprintf")
-        .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()));
-
-    // Set header include paths from the pkg-config probe.
-    for include_path in &library.include_paths {
-        bindings = bindings.clang_arg(format!("-I{}", include_path.display()));
-    }
-
-    let bindings = bindings.generate().expect("Unable to generate bindings");
-
-    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
-    bindings
-        .write_to_file(out_path.join("bindings.rs"))
-        .expect("Couldn't write bindings!");
-}
-
-#[cfg(not(feature = "bindgen"))]
-fn copy_pregenerated_bindings()
-{
-    use std::fs;
-
-    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
-    let crate_path = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
-    fs::copy(
-        crate_path.join("bindings.rs"),
-        out_path.join("bindings.rs"),
-    )
-    .expect("Couldn't find pregenerated bindings!");
-}
 
 /// Locate libvlc via pkg-config.
 fn probe_libvlc() -> Result<pkg_config::Library, pkg_config::Error> {
@@ -142,8 +96,11 @@ mod windows {
                     }
                 ),
             ])
-            .spawn()
-            .unwrap();
+            .status()
+            .expect("Failed to run lib.exe")
+            .success()
+            .then_some(())
+            .expect("lib.exe failed to generate the vlc import library");
     }
 
     fn vlc_path() -> PathBuf {
@@ -166,22 +123,9 @@ mod windows {
 }
 
 fn main() {
-    // Probe once and reuse the result for both binding generation (include
-    // paths) and linking (pkg-config emits the link directives on success).
-    let library = probe_libvlc();
-
-    // Binding generation
-    #[cfg(feature = "bindgen")]
-    generate_bindings(library.as_ref().expect(
-        "pkg-config is required to locate the libvlc headers with the `bindgen` feature",
-    ));
-
-    #[cfg(not(feature = "bindgen"))]
-    copy_pregenerated_bindings();
-
-    // Link. On success pkg-config has already emitted the link directives; only
-    // the failure path needs handling.
-    if let Err(err) = library {
+    // On success pkg-config has already emitted the link directives; only the
+    // failure path needs handling.
+    if let Err(err) = probe_libvlc() {
         #[cfg(target_os = "windows")]
         windows::link_vlc();
 

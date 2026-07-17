@@ -3,4 +3,6 @@
 #![allow(non_snake_case)]
 #![no_std]
 
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+// The bindings are a committed source file, regenerated out of band with
+// `cargo xtask bindgen`.
+include!("../bindings.rs");

@@ -1,0 +1,12 @@
+[package]
+name = "xtask"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+bindgen = "0.72"
+pkg-config = "0.3"
+
+# Standalone from the vlc-rs workspace, kept out of the normal build graph.
+[workspace]

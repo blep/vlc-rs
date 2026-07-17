@@ -22,6 +22,7 @@ crate-type = ["rlib"]
 libc = "0.2"
 libvlc-sys = { path = "libvlc-sys" }
 
-[features]
-default = []
-use-bindgen = ["libvlc-sys/use-bindgen"]
+# `xtask` contains maintenance tools; keep it out of the workspace so normal
+# builds never compile it.
+[workspace]
+exclude = ["xtask"]
