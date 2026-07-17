@@ -12,12 +12,12 @@ fn generate_bindings() {
         .use_core()
         // Use libc
         .ctypes_prefix("libc")
-        // Whitelist
-        .whitelist_type(".*vlc.*")
-        .whitelist_function(".*vlc.*")
-        .whitelist_var(".*vlc.*")
-        .whitelist_function("vsnprintf")
-        .parse_callbacks(Box::new(bindgen::CargoCallbacks));
+        // Allowlist every (lib)vlc symbol.
+        .allowlist_item("(lib|LIB)?(vlc|VLC)_.*")
+        // Required by the Windows `legacy_stdio_definitions` link workaround
+        // (see `windows::link_vlc`).
+        .allowlist_function("vsnprintf")
+        .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()));
 
     // Set header include paths
     let pkg_config_library = pkg_config::Config::new().probe("libvlc").unwrap();
