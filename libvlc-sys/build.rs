@@ -2,6 +2,9 @@ use std::env;
 use std::path::PathBuf;
 use pkg_config;
 
+/// Minimum supported libvlc version.
+const MIN_LIBVLC_VERSION: &str = "3.0.0";
+
 #[cfg(feature = "bindgen")]
 fn generate_bindings() {
     println!("cargo:rerun-if-changed=wrapper.h");
@@ -47,9 +50,10 @@ fn copy_pregenerated_bindings()
     .expect("Couldn't find pregenerated bindings!");
 }
 
-fn link_vlc_with_pkgconfig() -> Result<pkg_config::Library, pkg_config::Error> {
+/// Locate libvlc via pkg-config.
+fn probe_libvlc() -> Result<pkg_config::Library, pkg_config::Error> {
     pkg_config::Config::new()
-        .print_system_libs(false)
+        .atleast_version(MIN_LIBVLC_VERSION)
         .probe("libvlc")
 }
 
@@ -171,12 +175,12 @@ fn main() {
     copy_pregenerated_bindings();
 
     // Link
-    if let Err(err) = link_vlc_with_pkgconfig() {
+    if let Err(err) = probe_libvlc() {
         #[cfg(target_os = "windows")]
         windows::link_vlc();
 
         #[cfg(not(target_os = "windows"))]
-        panic!("libvlc not found: {:?}", err);
+        panic!("libvlc (>= {}) not found: {:?}", MIN_LIBVLC_VERSION, err);
     }
 
     println!("cargo:rustc-link-lib=vlc");
