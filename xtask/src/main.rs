@@ -43,9 +43,6 @@ fn generate_bindings() {
         .ctypes_prefix("libc")
         // Allowlist every (lib)vlc symbol.
         .allowlist_item("(lib|LIB)?(vlc|VLC)_.*")
-        // Required by the Windows `legacy_stdio_definitions` link workaround
-        // (see libvlc-sys/build.rs).
-        .allowlist_function("vsnprintf")
         // libvlc only uses FILE behind a pointer. Map it
         // to libc's opaque, per-platform FILE rather than emitting glibc's
         // plain _IO_FILE, whose baked-in layout breaks non-Linux builds.

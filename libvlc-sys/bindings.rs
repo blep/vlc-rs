@@ -1611,12 +1611,6 @@ const _: () = {
         [::core::mem::offset_of!(libvlc_log_message_t, psz_message) - 32usize];
 };
 unsafe extern "C" {
-    pub fn vsnprintf(
-        __s: *mut libc::c_char,
-        __maxlen: libc::c_ulong,
-        __format: *const libc::c_char,
-        __arg: VaList,
-    ) -> libc::c_int;
     pub fn libvlc_errmsg() -> *const libc::c_char;
     pub fn libvlc_clearerr();
     pub fn libvlc_vprinterr(

@@ -161,7 +161,7 @@ unsafe extern "C" fn logging_cb(
     let f: &Box<dyn Fn(LogLevel, Log, Cow<str>) + Send + 'static> = ::std::mem::transmute(data);
     let mut buf: [c_char; BUF_SIZE] = [0; BUF_SIZE];
 
-    sys::vsnprintf(buf.as_mut_ptr(), BUF_SIZE.try_into().unwrap(), fmt, args);
+    sys::vsnprintf(buf.as_mut_ptr(), BUF_SIZE, fmt, args);
 
     f((level as u32).into(), Log{ptr: ctx}, from_cstr_ref(buf.as_ptr()).unwrap());
 }
