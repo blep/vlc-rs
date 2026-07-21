@@ -49,7 +49,9 @@ fn generate_bindings() {
         // Block the whole va_list family and rewrite the parameters bindings to our own `VaList`,
         // which is ABI-correct on every target.
         .blocklist_type(".*va_list.*")
-        .raw_line("pub use crate::valist::VaList;");
+        .raw_line("pub use crate::valist::VaList;")
+        // Emit a single extern block rather than one per function.
+        .merge_extern_blocks(true);
 
     for path in &library.include_paths {
         bindings = bindings.clang_arg(format!("-I{}", path.display()));
