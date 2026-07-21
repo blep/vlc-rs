@@ -1610,6 +1610,7 @@ const _: () = {
     ["Offset of field: libvlc_log_message_t::psz_message"]
         [::core::mem::offset_of!(libvlc_log_message_t, psz_message) - 32usize];
 };
+#[cfg_attr(windows, link(name = "libvlc", kind = "raw-dylib"))]
 unsafe extern "C" {
     pub fn libvlc_errmsg() -> *const libc::c_char;
     pub fn libvlc_clearerr();

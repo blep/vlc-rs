@@ -73,6 +73,13 @@ fn generate_bindings() {
         "a va_list spelling we do not know about survived"
     );
 
+    // On Windows rustc can synthesise the imports straight from the DLL, so no
+    // import library is needed. bindgen cannot emit the attribute itself.
+    let generated = generated.replace(
+        "unsafe extern \"C\" {",
+        "#[cfg_attr(windows, link(name = \"libvlc\", kind = \"raw-dylib\"))]\nunsafe extern \"C\" {",
+    );
+
     std::fs::write(&output, generated).expect("couldn't write bindings");
     println!("wrote {}", output.display());
 }
