@@ -10,7 +10,7 @@ documentation = "https://docs.rs/vlc-rs"
 repository = "https://code.videolan.org/videolan/vlc-rs"
 homepage = "https://code.videolan.org/videolan/vlc-rs"
 license = "MIT"
-edition = "2018"
+edition = "2021"
 build = "build.rs"
 
 [lib]
