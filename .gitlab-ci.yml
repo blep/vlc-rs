@@ -2,7 +2,7 @@ stages:
     - build
 
 variables:
-    VLC_UBUNTU_IMAGE: registry.videolan.org/vlc-rs-libvlc-stable-ubuntu:20211117143343
+    VLC_UBUNTU_IMAGE: registry.videolan.org/vlc-rs-libvlc-stable-ubuntu:20260728042128
 
 vlc-rs-build:
     tags:
