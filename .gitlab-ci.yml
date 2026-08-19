@@ -11,5 +11,6 @@ vlc-rs-build:
         - amd64
     stage: build
     image: $VLC_UBUNTU_IMAGE
+    interruptible: true
     script:
         - cargo build --all
