@@ -9,9 +9,6 @@ vlc-rs-build:
         - docker
         - amd64
     stage: build
-    image:
-        name: $VLC_UBUNTU_IMAGE
-
+    image: $VLC_UBUNTU_IMAGE
     script:
-        - . $CARGO_HOME/env
         - cargo build --all
