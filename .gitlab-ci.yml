@@ -5,7 +5,7 @@ variables:
     VLC_UBUNTU_IMAGE: registry.videolan.org/vlc-rs-libvlc-stable-ubuntu:20260728042128
     CARGO_TERM_COLOR: always
 
-vlc-rs-build:
+build-linux:
     tags:
         - docker
         - amd64
@@ -13,4 +13,4 @@ vlc-rs-build:
     image: $VLC_UBUNTU_IMAGE
     interruptible: true
     script:
-        - cargo build --all
+        - cargo test --workspace --all-targets
