@@ -14,4 +14,4 @@
 /target/
 /libvlc-sys/target
 /xtask/target
-Cargo.lock
+/Cargo.lock
