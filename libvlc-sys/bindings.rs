@@ -18,8 +18,6 @@ pub const LIBVLC_EVENTS_H: u32 = 1;
 pub const LIBVLC_DIALOG_H: u32 = 1;
 pub const LIBVLC_VLM_H: u32 = 1;
 pub const LIBVLC_DEPRECATED_H: u32 = 1;
-pub type __off_t = libc::c_long;
-pub type __off64_t = libc::c_long;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_instance_t {
@@ -64,23 +62,6 @@ pub struct libvlc_module_description_t {
     pub psz_help: *mut libc::c_char,
     pub p_next: *mut libvlc_module_description_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_module_description_t"]
-        [::core::mem::size_of::<libvlc_module_description_t>() - 40usize];
-    ["Alignment of libvlc_module_description_t"]
-        [::core::mem::align_of::<libvlc_module_description_t>() - 8usize];
-    ["Offset of field: libvlc_module_description_t::psz_name"]
-        [::core::mem::offset_of!(libvlc_module_description_t, psz_name) - 0usize];
-    ["Offset of field: libvlc_module_description_t::psz_shortname"]
-        [::core::mem::offset_of!(libvlc_module_description_t, psz_shortname) - 8usize];
-    ["Offset of field: libvlc_module_description_t::psz_longname"]
-        [::core::mem::offset_of!(libvlc_module_description_t, psz_longname) - 16usize];
-    ["Offset of field: libvlc_module_description_t::psz_help"]
-        [::core::mem::offset_of!(libvlc_module_description_t, psz_help) - 24usize];
-    ["Offset of field: libvlc_module_description_t::p_next"]
-        [::core::mem::offset_of!(libvlc_module_description_t, p_next) - 32usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_renderer_discoverer_t {
@@ -92,17 +73,6 @@ pub struct libvlc_rd_description_t {
     pub psz_name: *mut libc::c_char,
     pub psz_longname: *mut libc::c_char,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_rd_description_t"]
-        [::core::mem::size_of::<libvlc_rd_description_t>() - 16usize];
-    ["Alignment of libvlc_rd_description_t"]
-        [::core::mem::align_of::<libvlc_rd_description_t>() - 8usize];
-    ["Offset of field: libvlc_rd_description_t::psz_name"]
-        [::core::mem::offset_of!(libvlc_rd_description_t, psz_name) - 0usize];
-    ["Offset of field: libvlc_rd_description_t::psz_longname"]
-        [::core::mem::offset_of!(libvlc_rd_description_t, psz_longname) - 8usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_renderer_item_t {
@@ -176,41 +146,6 @@ pub struct libvlc_media_stats_t {
     pub i_sent_bytes: libc::c_int,
     pub f_send_bitrate: f32,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_media_stats_t"][::core::mem::size_of::<libvlc_media_stats_t>() - 60usize];
-    ["Alignment of libvlc_media_stats_t"][::core::mem::align_of::<libvlc_media_stats_t>() - 4usize];
-    ["Offset of field: libvlc_media_stats_t::i_read_bytes"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_read_bytes) - 0usize];
-    ["Offset of field: libvlc_media_stats_t::f_input_bitrate"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, f_input_bitrate) - 4usize];
-    ["Offset of field: libvlc_media_stats_t::i_demux_read_bytes"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_demux_read_bytes) - 8usize];
-    ["Offset of field: libvlc_media_stats_t::f_demux_bitrate"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, f_demux_bitrate) - 12usize];
-    ["Offset of field: libvlc_media_stats_t::i_demux_corrupted"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_demux_corrupted) - 16usize];
-    ["Offset of field: libvlc_media_stats_t::i_demux_discontinuity"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_demux_discontinuity) - 20usize];
-    ["Offset of field: libvlc_media_stats_t::i_decoded_video"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_decoded_video) - 24usize];
-    ["Offset of field: libvlc_media_stats_t::i_decoded_audio"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_decoded_audio) - 28usize];
-    ["Offset of field: libvlc_media_stats_t::i_displayed_pictures"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_displayed_pictures) - 32usize];
-    ["Offset of field: libvlc_media_stats_t::i_lost_pictures"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_lost_pictures) - 36usize];
-    ["Offset of field: libvlc_media_stats_t::i_played_abuffers"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_played_abuffers) - 40usize];
-    ["Offset of field: libvlc_media_stats_t::i_lost_abuffers"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_lost_abuffers) - 44usize];
-    ["Offset of field: libvlc_media_stats_t::i_sent_packets"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_sent_packets) - 48usize];
-    ["Offset of field: libvlc_media_stats_t::i_sent_bytes"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, i_sent_bytes) - 52usize];
-    ["Offset of field: libvlc_media_stats_t::f_send_bitrate"]
-        [::core::mem::offset_of!(libvlc_media_stats_t, f_send_bitrate) - 56usize];
-};
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct libvlc_media_track_info_t {
@@ -233,89 +168,18 @@ pub struct libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_1 {
     pub i_channels: libc::c_uint,
     pub i_rate: libc::c_uint,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_1"]
-        [::core::mem::size_of::<libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_1>() - 8usize];
-    ["Alignment of libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_1"]
-        [::core::mem::align_of::<libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_1>() - 4usize];
-    ["Offset of field: libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_1::i_channels"][::core::mem::offset_of!(
-        libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_1,
-        i_channels
-    )
-        - 0usize];
-    ["Offset of field: libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_1::i_rate"][::core::mem::offset_of!(
-        libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_1,
-        i_rate
-    ) - 4usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_2 {
     pub i_height: libc::c_uint,
     pub i_width: libc::c_uint,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_2"]
-        [::core::mem::size_of::<libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_2>() - 8usize];
-    ["Alignment of libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_2"]
-        [::core::mem::align_of::<libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_2>() - 4usize];
-    ["Offset of field: libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_2::i_height"][::core::mem::offset_of!(
-        libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_2,
-        i_height
-    )
-        - 0usize];
-    ["Offset of field: libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_2::i_width"][::core::mem::offset_of!(
-        libvlc_media_track_info_t__bindgen_ty_1__bindgen_ty_2,
-        i_width
-    ) - 4usize];
-};
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_media_track_info_t__bindgen_ty_1"]
-        [::core::mem::size_of::<libvlc_media_track_info_t__bindgen_ty_1>() - 8usize];
-    ["Alignment of libvlc_media_track_info_t__bindgen_ty_1"]
-        [::core::mem::align_of::<libvlc_media_track_info_t__bindgen_ty_1>() - 4usize];
-    ["Offset of field: libvlc_media_track_info_t__bindgen_ty_1::audio"]
-        [::core::mem::offset_of!(libvlc_media_track_info_t__bindgen_ty_1, audio) - 0usize];
-    ["Offset of field: libvlc_media_track_info_t__bindgen_ty_1::video"]
-        [::core::mem::offset_of!(libvlc_media_track_info_t__bindgen_ty_1, video) - 0usize];
-};
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_media_track_info_t"]
-        [::core::mem::size_of::<libvlc_media_track_info_t>() - 28usize];
-    ["Alignment of libvlc_media_track_info_t"]
-        [::core::mem::align_of::<libvlc_media_track_info_t>() - 4usize];
-    ["Offset of field: libvlc_media_track_info_t::i_codec"]
-        [::core::mem::offset_of!(libvlc_media_track_info_t, i_codec) - 0usize];
-    ["Offset of field: libvlc_media_track_info_t::i_id"]
-        [::core::mem::offset_of!(libvlc_media_track_info_t, i_id) - 4usize];
-    ["Offset of field: libvlc_media_track_info_t::i_type"]
-        [::core::mem::offset_of!(libvlc_media_track_info_t, i_type) - 8usize];
-    ["Offset of field: libvlc_media_track_info_t::i_profile"]
-        [::core::mem::offset_of!(libvlc_media_track_info_t, i_profile) - 12usize];
-    ["Offset of field: libvlc_media_track_info_t::i_level"]
-        [::core::mem::offset_of!(libvlc_media_track_info_t, i_level) - 16usize];
-    ["Offset of field: libvlc_media_track_info_t::u"]
-        [::core::mem::offset_of!(libvlc_media_track_info_t, u) - 20usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_audio_track_t {
     pub i_channels: libc::c_uint,
     pub i_rate: libc::c_uint,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_audio_track_t"][::core::mem::size_of::<libvlc_audio_track_t>() - 8usize];
-    ["Alignment of libvlc_audio_track_t"][::core::mem::align_of::<libvlc_audio_track_t>() - 4usize];
-    ["Offset of field: libvlc_audio_track_t::i_channels"]
-        [::core::mem::offset_of!(libvlc_audio_track_t, i_channels) - 0usize];
-    ["Offset of field: libvlc_audio_track_t::i_rate"]
-        [::core::mem::offset_of!(libvlc_audio_track_t, i_rate) - 4usize];
-};
 pub const libvlc_video_orient_t_libvlc_video_orient_top_left: libvlc_video_orient_t = 0;
 pub const libvlc_video_orient_t_libvlc_video_orient_top_right: libvlc_video_orient_t = 1;
 pub const libvlc_video_orient_t_libvlc_video_orient_bottom_left: libvlc_video_orient_t = 2;
@@ -340,21 +204,6 @@ pub struct libvlc_video_viewpoint_t {
     pub f_roll: f32,
     pub f_field_of_view: f32,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_video_viewpoint_t"]
-        [::core::mem::size_of::<libvlc_video_viewpoint_t>() - 16usize];
-    ["Alignment of libvlc_video_viewpoint_t"]
-        [::core::mem::align_of::<libvlc_video_viewpoint_t>() - 4usize];
-    ["Offset of field: libvlc_video_viewpoint_t::f_yaw"]
-        [::core::mem::offset_of!(libvlc_video_viewpoint_t, f_yaw) - 0usize];
-    ["Offset of field: libvlc_video_viewpoint_t::f_pitch"]
-        [::core::mem::offset_of!(libvlc_video_viewpoint_t, f_pitch) - 4usize];
-    ["Offset of field: libvlc_video_viewpoint_t::f_roll"]
-        [::core::mem::offset_of!(libvlc_video_viewpoint_t, f_roll) - 8usize];
-    ["Offset of field: libvlc_video_viewpoint_t::f_field_of_view"]
-        [::core::mem::offset_of!(libvlc_video_viewpoint_t, f_field_of_view) - 12usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_video_track_t {
@@ -368,42 +217,11 @@ pub struct libvlc_video_track_t {
     pub i_projection: libvlc_video_projection_t,
     pub pose: libvlc_video_viewpoint_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_video_track_t"][::core::mem::size_of::<libvlc_video_track_t>() - 48usize];
-    ["Alignment of libvlc_video_track_t"][::core::mem::align_of::<libvlc_video_track_t>() - 4usize];
-    ["Offset of field: libvlc_video_track_t::i_height"]
-        [::core::mem::offset_of!(libvlc_video_track_t, i_height) - 0usize];
-    ["Offset of field: libvlc_video_track_t::i_width"]
-        [::core::mem::offset_of!(libvlc_video_track_t, i_width) - 4usize];
-    ["Offset of field: libvlc_video_track_t::i_sar_num"]
-        [::core::mem::offset_of!(libvlc_video_track_t, i_sar_num) - 8usize];
-    ["Offset of field: libvlc_video_track_t::i_sar_den"]
-        [::core::mem::offset_of!(libvlc_video_track_t, i_sar_den) - 12usize];
-    ["Offset of field: libvlc_video_track_t::i_frame_rate_num"]
-        [::core::mem::offset_of!(libvlc_video_track_t, i_frame_rate_num) - 16usize];
-    ["Offset of field: libvlc_video_track_t::i_frame_rate_den"]
-        [::core::mem::offset_of!(libvlc_video_track_t, i_frame_rate_den) - 20usize];
-    ["Offset of field: libvlc_video_track_t::i_orientation"]
-        [::core::mem::offset_of!(libvlc_video_track_t, i_orientation) - 24usize];
-    ["Offset of field: libvlc_video_track_t::i_projection"]
-        [::core::mem::offset_of!(libvlc_video_track_t, i_projection) - 28usize];
-    ["Offset of field: libvlc_video_track_t::pose"]
-        [::core::mem::offset_of!(libvlc_video_track_t, pose) - 32usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_subtitle_track_t {
     pub psz_encoding: *mut libc::c_char,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_subtitle_track_t"][::core::mem::size_of::<libvlc_subtitle_track_t>() - 8usize];
-    ["Alignment of libvlc_subtitle_track_t"]
-        [::core::mem::align_of::<libvlc_subtitle_track_t>() - 8usize];
-    ["Offset of field: libvlc_subtitle_track_t::psz_encoding"]
-        [::core::mem::offset_of!(libvlc_subtitle_track_t, psz_encoding) - 0usize];
-};
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct libvlc_media_track_t {
@@ -425,42 +243,6 @@ pub union libvlc_media_track_t__bindgen_ty_1 {
     pub video: *mut libvlc_video_track_t,
     pub subtitle: *mut libvlc_subtitle_track_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_media_track_t__bindgen_ty_1"]
-        [::core::mem::size_of::<libvlc_media_track_t__bindgen_ty_1>() - 8usize];
-    ["Alignment of libvlc_media_track_t__bindgen_ty_1"]
-        [::core::mem::align_of::<libvlc_media_track_t__bindgen_ty_1>() - 8usize];
-    ["Offset of field: libvlc_media_track_t__bindgen_ty_1::audio"]
-        [::core::mem::offset_of!(libvlc_media_track_t__bindgen_ty_1, audio) - 0usize];
-    ["Offset of field: libvlc_media_track_t__bindgen_ty_1::video"]
-        [::core::mem::offset_of!(libvlc_media_track_t__bindgen_ty_1, video) - 0usize];
-    ["Offset of field: libvlc_media_track_t__bindgen_ty_1::subtitle"]
-        [::core::mem::offset_of!(libvlc_media_track_t__bindgen_ty_1, subtitle) - 0usize];
-};
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_media_track_t"][::core::mem::size_of::<libvlc_media_track_t>() - 56usize];
-    ["Alignment of libvlc_media_track_t"][::core::mem::align_of::<libvlc_media_track_t>() - 8usize];
-    ["Offset of field: libvlc_media_track_t::i_codec"]
-        [::core::mem::offset_of!(libvlc_media_track_t, i_codec) - 0usize];
-    ["Offset of field: libvlc_media_track_t::i_original_fourcc"]
-        [::core::mem::offset_of!(libvlc_media_track_t, i_original_fourcc) - 4usize];
-    ["Offset of field: libvlc_media_track_t::i_id"]
-        [::core::mem::offset_of!(libvlc_media_track_t, i_id) - 8usize];
-    ["Offset of field: libvlc_media_track_t::i_type"]
-        [::core::mem::offset_of!(libvlc_media_track_t, i_type) - 12usize];
-    ["Offset of field: libvlc_media_track_t::i_profile"]
-        [::core::mem::offset_of!(libvlc_media_track_t, i_profile) - 16usize];
-    ["Offset of field: libvlc_media_track_t::i_level"]
-        [::core::mem::offset_of!(libvlc_media_track_t, i_level) - 20usize];
-    ["Offset of field: libvlc_media_track_t::i_bitrate"]
-        [::core::mem::offset_of!(libvlc_media_track_t, i_bitrate) - 32usize];
-    ["Offset of field: libvlc_media_track_t::psz_language"]
-        [::core::mem::offset_of!(libvlc_media_track_t, psz_language) - 40usize];
-    ["Offset of field: libvlc_media_track_t::psz_description"]
-        [::core::mem::offset_of!(libvlc_media_track_t, psz_description) - 48usize];
-};
 pub const libvlc_media_type_t_libvlc_media_type_unknown: libvlc_media_type_t = 0;
 pub const libvlc_media_type_t_libvlc_media_type_file: libvlc_media_type_t = 1;
 pub const libvlc_media_type_t_libvlc_media_type_directory: libvlc_media_type_t = 2;
@@ -493,17 +275,6 @@ pub struct libvlc_media_slave_t {
     pub i_type: libvlc_media_slave_type_t,
     pub i_priority: libc::c_uint,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_media_slave_t"][::core::mem::size_of::<libvlc_media_slave_t>() - 16usize];
-    ["Alignment of libvlc_media_slave_t"][::core::mem::align_of::<libvlc_media_slave_t>() - 8usize];
-    ["Offset of field: libvlc_media_slave_t::psz_uri"]
-        [::core::mem::offset_of!(libvlc_media_slave_t, psz_uri) - 0usize];
-    ["Offset of field: libvlc_media_slave_t::i_type"]
-        [::core::mem::offset_of!(libvlc_media_slave_t, i_type) - 8usize];
-    ["Offset of field: libvlc_media_slave_t::i_priority"]
-        [::core::mem::offset_of!(libvlc_media_slave_t, i_priority) - 12usize];
-};
 pub type libvlc_media_open_cb = ::core::option::Option<
     unsafe extern "C" fn(
         opaque: *mut libc::c_void,
@@ -536,19 +307,6 @@ pub struct libvlc_track_description_t {
     pub psz_name: *mut libc::c_char,
     pub p_next: *mut libvlc_track_description_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_track_description_t"]
-        [::core::mem::size_of::<libvlc_track_description_t>() - 24usize];
-    ["Alignment of libvlc_track_description_t"]
-        [::core::mem::align_of::<libvlc_track_description_t>() - 8usize];
-    ["Offset of field: libvlc_track_description_t::i_id"]
-        [::core::mem::offset_of!(libvlc_track_description_t, i_id) - 0usize];
-    ["Offset of field: libvlc_track_description_t::psz_name"]
-        [::core::mem::offset_of!(libvlc_track_description_t, psz_name) - 8usize];
-    ["Offset of field: libvlc_track_description_t::p_next"]
-        [::core::mem::offset_of!(libvlc_track_description_t, p_next) - 16usize];
-};
 pub const libvlc_title_menu: _bindgen_ty_2 = 1;
 pub const libvlc_title_interactive: _bindgen_ty_2 = 2;
 pub type _bindgen_ty_2 = libc::c_uint;
@@ -559,19 +317,6 @@ pub struct libvlc_title_description_t {
     pub psz_name: *mut libc::c_char,
     pub i_flags: libc::c_uint,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_title_description_t"]
-        [::core::mem::size_of::<libvlc_title_description_t>() - 24usize];
-    ["Alignment of libvlc_title_description_t"]
-        [::core::mem::align_of::<libvlc_title_description_t>() - 8usize];
-    ["Offset of field: libvlc_title_description_t::i_duration"]
-        [::core::mem::offset_of!(libvlc_title_description_t, i_duration) - 0usize];
-    ["Offset of field: libvlc_title_description_t::psz_name"]
-        [::core::mem::offset_of!(libvlc_title_description_t, psz_name) - 8usize];
-    ["Offset of field: libvlc_title_description_t::i_flags"]
-        [::core::mem::offset_of!(libvlc_title_description_t, i_flags) - 16usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_chapter_description_t {
@@ -579,19 +324,6 @@ pub struct libvlc_chapter_description_t {
     pub i_duration: i64,
     pub psz_name: *mut libc::c_char,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_chapter_description_t"]
-        [::core::mem::size_of::<libvlc_chapter_description_t>() - 24usize];
-    ["Alignment of libvlc_chapter_description_t"]
-        [::core::mem::align_of::<libvlc_chapter_description_t>() - 8usize];
-    ["Offset of field: libvlc_chapter_description_t::i_time_offset"]
-        [::core::mem::offset_of!(libvlc_chapter_description_t, i_time_offset) - 0usize];
-    ["Offset of field: libvlc_chapter_description_t::i_duration"]
-        [::core::mem::offset_of!(libvlc_chapter_description_t, i_duration) - 8usize];
-    ["Offset of field: libvlc_chapter_description_t::psz_name"]
-        [::core::mem::offset_of!(libvlc_chapter_description_t, psz_name) - 16usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_audio_output_t {
@@ -599,18 +331,6 @@ pub struct libvlc_audio_output_t {
     pub psz_description: *mut libc::c_char,
     pub p_next: *mut libvlc_audio_output_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_audio_output_t"][::core::mem::size_of::<libvlc_audio_output_t>() - 24usize];
-    ["Alignment of libvlc_audio_output_t"]
-        [::core::mem::align_of::<libvlc_audio_output_t>() - 8usize];
-    ["Offset of field: libvlc_audio_output_t::psz_name"]
-        [::core::mem::offset_of!(libvlc_audio_output_t, psz_name) - 0usize];
-    ["Offset of field: libvlc_audio_output_t::psz_description"]
-        [::core::mem::offset_of!(libvlc_audio_output_t, psz_description) - 8usize];
-    ["Offset of field: libvlc_audio_output_t::p_next"]
-        [::core::mem::offset_of!(libvlc_audio_output_t, p_next) - 16usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_audio_output_device_t {
@@ -618,19 +338,6 @@ pub struct libvlc_audio_output_device_t {
     pub psz_device: *mut libc::c_char,
     pub psz_description: *mut libc::c_char,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_audio_output_device_t"]
-        [::core::mem::size_of::<libvlc_audio_output_device_t>() - 24usize];
-    ["Alignment of libvlc_audio_output_device_t"]
-        [::core::mem::align_of::<libvlc_audio_output_device_t>() - 8usize];
-    ["Offset of field: libvlc_audio_output_device_t::p_next"]
-        [::core::mem::offset_of!(libvlc_audio_output_device_t, p_next) - 0usize];
-    ["Offset of field: libvlc_audio_output_device_t::psz_device"]
-        [::core::mem::offset_of!(libvlc_audio_output_device_t, psz_device) - 8usize];
-    ["Offset of field: libvlc_audio_output_device_t::psz_description"]
-        [::core::mem::offset_of!(libvlc_audio_output_device_t, psz_description) - 16usize];
-};
 pub const libvlc_video_marquee_option_t_libvlc_marquee_Enable: libvlc_video_marquee_option_t = 0;
 pub const libvlc_video_marquee_option_t_libvlc_marquee_Text: libvlc_video_marquee_option_t = 1;
 pub const libvlc_video_marquee_option_t_libvlc_marquee_Color: libvlc_video_marquee_option_t = 2;
@@ -816,19 +523,6 @@ pub struct libvlc_media_discoverer_description_t {
     pub psz_longname: *mut libc::c_char,
     pub i_cat: libvlc_media_discoverer_category_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_media_discoverer_description_t"]
-        [::core::mem::size_of::<libvlc_media_discoverer_description_t>() - 24usize];
-    ["Alignment of libvlc_media_discoverer_description_t"]
-        [::core::mem::align_of::<libvlc_media_discoverer_description_t>() - 8usize];
-    ["Offset of field: libvlc_media_discoverer_description_t::psz_name"]
-        [::core::mem::offset_of!(libvlc_media_discoverer_description_t, psz_name) - 0usize];
-    ["Offset of field: libvlc_media_discoverer_description_t::psz_longname"]
-        [::core::mem::offset_of!(libvlc_media_discoverer_description_t, psz_longname) - 8usize];
-    ["Offset of field: libvlc_media_discoverer_description_t::i_cat"]
-        [::core::mem::offset_of!(libvlc_media_discoverer_description_t, i_cat) - 16usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_media_discoverer_t {
@@ -945,558 +639,157 @@ pub union libvlc_event_t__bindgen_ty_1 {
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_1 {
     pub meta_type: libvlc_meta_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_1"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_1>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_1"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_1>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_1::meta_type"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_1, meta_type) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_2 {
     pub new_child: *mut libvlc_media_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_2"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_2>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_2"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_2>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_2::new_child"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_2, new_child) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_3 {
     pub new_duration: i64,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_3"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_3>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_3"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_3>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_3::new_duration"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1__bindgen_ty_3,
-        new_duration
-    ) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_4 {
     pub new_status: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_4"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_4>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_4"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_4>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_4::new_status"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_4, new_status) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_5 {
     pub md: *mut libvlc_media_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_5"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_5>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_5"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_5>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_5::md"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_5, md) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_6 {
     pub new_state: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_6"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_6>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_6"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_6>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_6::new_state"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_6, new_state) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_7 {
     pub item: *mut libvlc_media_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_7"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_7>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_7"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_7>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_7::item"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_7, item) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_8 {
     pub new_cache: f32,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_8"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_8>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_8"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_8>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_8::new_cache"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_8, new_cache) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_9 {
     pub new_chapter: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_9"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_9>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_9"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_9>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_9::new_chapter"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_9, new_chapter) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_10 {
     pub new_position: f32,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_10"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_10>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_10"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_10>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_10::new_position"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1__bindgen_ty_10,
-        new_position
-    ) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_11 {
     pub new_time: libvlc_time_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_11"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_11>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_11"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_11>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_11::new_time"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_11, new_time) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_12 {
     pub new_title: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_12"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_12>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_12"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_12>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_12::new_title"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_12, new_title) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_13 {
     pub new_seekable: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_13"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_13>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_13"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_13>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_13::new_seekable"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1__bindgen_ty_13,
-        new_seekable
-    ) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_14 {
     pub new_pausable: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_14"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_14>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_14"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_14>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_14::new_pausable"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1__bindgen_ty_14,
-        new_pausable
-    ) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_15 {
     pub new_scrambled: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_15"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_15>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_15"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_15>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_15::new_scrambled"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1__bindgen_ty_15,
-        new_scrambled
-    ) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_16 {
     pub new_count: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_16"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_16>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_16"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_16>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_16::new_count"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_16, new_count) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_17 {
     pub item: *mut libvlc_media_t,
     pub index: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_17"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_17>() - 16usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_17"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_17>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_17::item"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_17, item) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_17::index"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_17, index) - 8usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_18 {
     pub item: *mut libvlc_media_t,
     pub index: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_18"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_18>() - 16usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_18"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_18>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_18::item"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_18, item) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_18::index"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_18, index) - 8usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_19 {
     pub item: *mut libvlc_media_t,
     pub index: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_19"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_19>() - 16usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_19"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_19>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_19::item"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_19, item) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_19::index"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_19, index) - 8usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_20 {
     pub item: *mut libvlc_media_t,
     pub index: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_20"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_20>() - 16usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_20"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_20>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_20::item"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_20, item) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_20::index"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_20, index) - 8usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_21 {
     pub item: *mut libvlc_media_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_21"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_21>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_21"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_21>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_21::item"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_21, item) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_22 {
     pub psz_filename: *mut libc::c_char,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_22"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_22>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_22"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_22>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_22::psz_filename"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1__bindgen_ty_22,
-        psz_filename
-    ) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_23 {
     pub new_length: libvlc_time_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_23"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_23>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_23"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_23>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_23::new_length"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_23, new_length) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_24 {
     pub psz_media_name: *const libc::c_char,
     pub psz_instance_name: *const libc::c_char,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_24"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_24>() - 16usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_24"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_24>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_24::psz_media_name"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1__bindgen_ty_24,
-        psz_media_name
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_24::psz_instance_name"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1__bindgen_ty_24,
-        psz_instance_name
-    ) - 8usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_25 {
     pub new_media: *mut libvlc_media_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_25"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_25>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_25"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_25>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_25::new_media"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_25, new_media) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_26 {
     pub i_type: libvlc_track_type_t,
     pub i_id: libc::c_int,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_26"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_26>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_26"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_26>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_26::i_type"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_26, i_type) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_26::i_id"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_26, i_id) - 4usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_27 {
     pub volume: f32,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_27"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_27>() - 4usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_27"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_27>() - 4usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_27::volume"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_27, volume) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_28 {
     pub device: *const libc::c_char,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_28"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_28>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_28"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_28>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_28::device"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_28, device) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_29 {
     pub item: *mut libvlc_renderer_item_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_29"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_29>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_29"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_29>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_29::item"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_29, item) - 0usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_event_t__bindgen_ty_1__bindgen_ty_30 {
     pub item: *mut libvlc_renderer_item_t,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1__bindgen_ty_30"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_30>() - 8usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1__bindgen_ty_30"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1__bindgen_ty_30>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1__bindgen_ty_30::item"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1__bindgen_ty_30, item) - 0usize];
-};
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t__bindgen_ty_1"]
-        [::core::mem::size_of::<libvlc_event_t__bindgen_ty_1>() - 16usize];
-    ["Alignment of libvlc_event_t__bindgen_ty_1"]
-        [::core::mem::align_of::<libvlc_event_t__bindgen_ty_1>() - 8usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_meta_changed"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_meta_changed) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_subitem_added"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_subitem_added) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_duration_changed"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_duration_changed) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_parsed_changed"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_parsed_changed) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_freed"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_freed) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_state_changed"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_state_changed) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_subitemtree_added"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_subitemtree_added) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_buffering"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_player_buffering) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_chapter_changed"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_player_chapter_changed
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_position_changed"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_player_position_changed
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_time_changed"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_player_time_changed) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_title_changed"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_player_title_changed
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_seekable_changed"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_player_seekable_changed
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_pausable_changed"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_player_pausable_changed
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_scrambled_changed"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_player_scrambled_changed
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_vout"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_player_vout) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_list_item_added"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_list_item_added) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_list_will_add_item"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_list_will_add_item) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_list_item_deleted"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_list_item_deleted) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_list_will_delete_item"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_list_will_delete_item
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_list_player_next_item_set"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_list_player_next_item_set
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_snapshot_taken"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_player_snapshot_taken
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_length_changed"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_player_length_changed
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::vlm_media_event"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, vlm_media_event) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_media_changed"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        media_player_media_changed
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_es_changed"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_player_es_changed) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_audio_volume"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_player_audio_volume) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::media_player_audio_device"]
-        [::core::mem::offset_of!(libvlc_event_t__bindgen_ty_1, media_player_audio_device) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::renderer_discoverer_item_added"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        renderer_discoverer_item_added
-    ) - 0usize];
-    ["Offset of field: libvlc_event_t__bindgen_ty_1::renderer_discoverer_item_deleted"][::core::mem::offset_of!(
-        libvlc_event_t__bindgen_ty_1,
-        renderer_discoverer_item_deleted
-    ) - 0usize];
-};
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_event_t"][::core::mem::size_of::<libvlc_event_t>() - 32usize];
-    ["Alignment of libvlc_event_t"][::core::mem::align_of::<libvlc_event_t>() - 8usize];
-    ["Offset of field: libvlc_event_t::type_"]
-        [::core::mem::offset_of!(libvlc_event_t, type_) - 0usize];
-    ["Offset of field: libvlc_event_t::p_obj"]
-        [::core::mem::offset_of!(libvlc_event_t, p_obj) - 8usize];
-    ["Offset of field: libvlc_event_t::u"][::core::mem::offset_of!(libvlc_event_t, u) - 16usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_dialog_id {
@@ -1564,23 +857,6 @@ pub struct libvlc_dialog_cbs {
         ),
     >,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_dialog_cbs"][::core::mem::size_of::<libvlc_dialog_cbs>() - 48usize];
-    ["Alignment of libvlc_dialog_cbs"][::core::mem::align_of::<libvlc_dialog_cbs>() - 8usize];
-    ["Offset of field: libvlc_dialog_cbs::pf_display_error"]
-        [::core::mem::offset_of!(libvlc_dialog_cbs, pf_display_error) - 0usize];
-    ["Offset of field: libvlc_dialog_cbs::pf_display_login"]
-        [::core::mem::offset_of!(libvlc_dialog_cbs, pf_display_login) - 8usize];
-    ["Offset of field: libvlc_dialog_cbs::pf_display_question"]
-        [::core::mem::offset_of!(libvlc_dialog_cbs, pf_display_question) - 16usize];
-    ["Offset of field: libvlc_dialog_cbs::pf_display_progress"]
-        [::core::mem::offset_of!(libvlc_dialog_cbs, pf_display_progress) - 24usize];
-    ["Offset of field: libvlc_dialog_cbs::pf_cancel"]
-        [::core::mem::offset_of!(libvlc_dialog_cbs, pf_cancel) - 32usize];
-    ["Offset of field: libvlc_dialog_cbs::pf_update_progress"]
-        [::core::mem::offset_of!(libvlc_dialog_cbs, pf_update_progress) - 40usize];
-};
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct libvlc_log_iterator_t {
@@ -1595,21 +871,6 @@ pub struct libvlc_log_message_t {
     pub psz_header: *const libc::c_char,
     pub psz_message: *const libc::c_char,
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of libvlc_log_message_t"][::core::mem::size_of::<libvlc_log_message_t>() - 40usize];
-    ["Alignment of libvlc_log_message_t"][::core::mem::align_of::<libvlc_log_message_t>() - 8usize];
-    ["Offset of field: libvlc_log_message_t::i_severity"]
-        [::core::mem::offset_of!(libvlc_log_message_t, i_severity) - 0usize];
-    ["Offset of field: libvlc_log_message_t::psz_type"]
-        [::core::mem::offset_of!(libvlc_log_message_t, psz_type) - 8usize];
-    ["Offset of field: libvlc_log_message_t::psz_name"]
-        [::core::mem::offset_of!(libvlc_log_message_t, psz_name) - 16usize];
-    ["Offset of field: libvlc_log_message_t::psz_header"]
-        [::core::mem::offset_of!(libvlc_log_message_t, psz_header) - 24usize];
-    ["Offset of field: libvlc_log_message_t::psz_message"]
-        [::core::mem::offset_of!(libvlc_log_message_t, psz_message) - 32usize];
-};
 #[cfg_attr(windows, link(name = "libvlc", kind = "raw-dylib"))]
 unsafe extern "C" {
     pub fn libvlc_errmsg() -> *const libc::c_char;

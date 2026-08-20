@@ -43,16 +43,20 @@ fn generate_bindings() {
         .ctypes_prefix("libc")
         // Allowlist every (lib)vlc symbol.
         .allowlist_item("(lib|LIB)?(vlc|VLC)_.*")
-        // libvlc only uses FILE behind a pointer. Map it
-        // to libc's opaque, per-platform FILE rather than emitting glibc's
-        // plain _IO_FILE, whose baked-in layout breaks non-Linux builds.
+        // Avoid leaking unecessary glibc/platform specifics.
         .blocklist_type("_IO_.*")
+        .blocklist_type("_iobuf")
         .blocklist_type("FILE")
+        .blocklist_type("__off.*")
+        .blocklist_type("__uint64_t")
         .raw_line("pub use libc::FILE;")
         // Block the whole va_list family and rewrite the parameters bindings to our own `VaList`,
         // which is ABI-correct on every target.
         .blocklist_type(".*va_list.*")
         .raw_line("pub use crate::valist::VaList;")
+        // These bindings are committed once and compiled everywhere, so the layout assertions would
+        // only ever encode the machine that ran bindgen.
+        .layout_tests(false)
         // Emit a single extern block rather than one per function.
         .merge_extern_blocks(true);
 
