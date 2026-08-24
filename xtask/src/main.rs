@@ -46,6 +46,12 @@ fn generate_bindings() {
         // Required by the Windows `legacy_stdio_definitions` link workaround
         // (see libvlc-sys/build.rs).
         .allowlist_function("vsnprintf")
+        // libvlc only uses FILE behind a pointer. Map it
+        // to libc's opaque, per-platform FILE rather than emitting glibc's
+        // plain _IO_FILE, whose baked-in layout breaks non-Linux builds.
+        .blocklist_type("_IO_.*")
+        .blocklist_type("FILE")
+        .raw_line("pub use libc::FILE;")
         // Block the whole va_list family and rewrite the parameters bindings to our own `VaList`,
         // which is ABI-correct on every target.
         .blocklist_type(".*va_list.*")
