@@ -45,7 +45,11 @@ fn generate_bindings() {
         .allowlist_item("(lib|LIB)?(vlc|VLC)_.*")
         // Required by the Windows `legacy_stdio_definitions` link workaround
         // (see libvlc-sys/build.rs).
-        .allowlist_function("vsnprintf");
+        .allowlist_function("vsnprintf")
+        // Block the whole va_list family and rewrite the parameters bindings to our own `VaList`,
+        // which is ABI-correct on every target.
+        .blocklist_type(".*va_list.*")
+        .raw_line("pub use crate::valist::VaList;");
 
     for path in &library.include_paths {
         bindings = bindings.clang_arg(format!("-I{}", path.display()));
@@ -55,6 +59,14 @@ fn generate_bindings() {
         .generate()
         .expect("unable to generate bindings")
         .to_string();
+
+    let generated = generated
+        .replace("*mut __va_list_tag", "VaList")
+        .replace(": va_list", ": VaList");
+    assert!(
+        !generated.contains("va_list"),
+        "a va_list spelling we do not know about survived"
+    );
 
     std::fs::write(&output, generated).expect("couldn't write bindings");
     println!("wrote {}", output.display());
