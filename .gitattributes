@@ -1,0 +1,2 @@
+# Collapse generated bindings on gitlabs MRs
+libvlc-sys/bindings.rs gitlab-generated
