@@ -170,3 +170,9 @@ define_enum!(
     VlmMediaInstanceStatusEnd = libvlc_event_e_libvlc_VlmMediaInstanceStatusEnd,
     VlmMediaInstanceStatusError = libvlc_event_e_libvlc_VlmMediaInstanceStatusError,
 );
+
+define_enum!(
+    SlaveType, libvlc_media_slave_type_t;
+    Subtitle = libvlc_media_slave_type_t_libvlc_media_slave_type_subtitle,
+    Audio = libvlc_media_slave_type_t_libvlc_media_slave_type_audio,
+);

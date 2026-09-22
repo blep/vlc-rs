@@ -7,7 +7,8 @@ use crate::Instance;
 use crate::Media;
 use crate::EventManager;
 use libc::{c_void, c_uint};
-use crate::enums::{State, Position};
+use crate::enums::{State, Position, SlaveType};
+use crate::tools::to_cstr;
 use std::mem::transmute;
 
 /// A LibVLC media player plays one media (usually in a custom drawable).
@@ -43,6 +44,18 @@ impl MediaPlayer {
         }else{
             Some(Media{ptr: p})
         }
+    }
+
+    /// Add an external slave (e.g. an external subtitle file) to the player.
+    ///
+    /// `uri` must be a URI (for example `file:///path/to/subtitle.srt`). When
+    /// `select` is true the slave is selected immediately.
+    pub fn add_slave(&self, slave_type: SlaveType, uri: &str, select: bool) -> Result<(), ()> {
+        let uri = to_cstr(uri);
+        let result = unsafe{
+            sys::libvlc_media_player_add_slave(self.ptr, slave_type as u32, uri.as_ptr(), select)
+        };
+        if result == 0 { Ok(()) }else{ Err(()) }
     }
 
     /// Get the Event Manager from which the media player send event.

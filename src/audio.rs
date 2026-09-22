@@ -13,6 +13,10 @@ pub trait MediaPlayerAudioEx {
     fn get_volume(&self) -> i32;
     fn set_volume(&self, volume: i32) -> Result<(), ()>;
     fn get_audio_track_description(&self) -> Option<Vec<TrackDescription>>;
+    /// Get the current audio track, or `None` when audio is disabled.
+    fn get_audio_track(&self) -> Option<i32>;
+    /// Select an audio track (`-1` disables audio).
+    fn set_audio_track(&self, track: i32) -> Result<(), ()>;
 }
 
 impl MediaPlayerAudioEx for MediaPlayer {
@@ -47,12 +51,25 @@ impl MediaPlayerAudioEx for MediaPlayer {
             let mut td = Vec::new();
             let mut p = p0;
 
-            while !(*p).p_next.is_null() {
+            while !p.is_null() {
                 td.push(TrackDescription{ id: (*p).i_id, name: from_cstr((*p).psz_name) });
                 p = (*p).p_next;
             }
             sys::libvlc_track_description_list_release(p0);
             Some(td)
+        }
+    }
+
+    fn get_audio_track(&self) -> Option<i32> {
+        unsafe{
+            let track = sys::libvlc_audio_get_track(self.ptr);
+            if track == -1 { None }else{ Some(track) }
+        }
+    }
+
+    fn set_audio_track(&self, track: i32) -> Result<(), ()> {
+        unsafe{
+            if sys::libvlc_audio_set_track(self.ptr, track) == 0 { Ok(()) }else{ Err(()) }
         }
     }
 

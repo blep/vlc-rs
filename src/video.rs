@@ -40,6 +40,12 @@ pub trait MediaPlayerVideoEx {
     fn get_aspect_ratio(&self) -> Option<String>;
     fn set_aspect_ratio(&self, aspect: Option<&str>);
     fn get_video_track_description(&self) -> Option<Vec<TrackDescription>>;
+    /// List the available subtitle (SPU) tracks, including the "Disable" entry.
+    fn get_spu_description(&self) -> Option<Vec<TrackDescription>>;
+    /// Get the current subtitle (SPU) track, or `None` when subtitles are disabled.
+    fn get_spu(&self) -> Option<i32>;
+    /// Select a subtitle (SPU) track (`-1` disables subtitles).
+    fn set_spu(&self, spu: i32) -> Result<(), ()>;
     fn get_adjust_int(&self, option: VideoAdjustOption) -> i32;
     fn set_adjust_int(&self, option: VideoAdjustOption, value: i32);
     fn get_adjust_float(&self, option: VideoAdjustOption) -> f32;
@@ -145,12 +151,38 @@ impl MediaPlayerVideoEx for MediaPlayer {
             let mut td = Vec::new();
             let mut p = p0;
 
-            while !(*p).p_next.is_null() {
+            while !p.is_null() {
                 td.push(TrackDescription{ id: (*p).i_id, name: from_cstr((*p).psz_name) });
                 p = (*p).p_next;
             }
             sys::libvlc_track_description_list_release(p0);
             Some(td)
+        }
+    }
+    fn get_spu_description(&self) -> Option<Vec<TrackDescription>> {
+        unsafe{
+            let p0 = sys::libvlc_video_get_spu_description(self.ptr);
+            if p0.is_null() { return None; }
+            let mut td = Vec::new();
+            let mut p = p0;
+
+            while !p.is_null() {
+                td.push(TrackDescription{ id: (*p).i_id, name: from_cstr((*p).psz_name) });
+                p = (*p).p_next;
+            }
+            sys::libvlc_track_description_list_release(p0);
+            Some(td)
+        }
+    }
+    fn get_spu(&self) -> Option<i32> {
+        unsafe{
+            let spu = sys::libvlc_video_get_spu(self.ptr);
+            if spu == -1 { None }else{ Some(spu) }
+        }
+    }
+    fn set_spu(&self, spu: i32) -> Result<(), ()> {
+        unsafe{
+            if sys::libvlc_video_set_spu(self.ptr, spu) == 0 { Ok(()) }else{ Err(()) }
         }
     }
     fn get_adjust_int(&self, option: VideoAdjustOption) -> i32 {

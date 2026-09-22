@@ -4,7 +4,7 @@
 
 use vlc_sys as sys;
 use crate::{Instance, EventManager};
-use crate::enums::{State, Meta, TrackType};
+use crate::enums::{State, Meta, TrackType, SlaveType};
 use crate::tools::{to_cstr, from_cstr, path_to_cstr};
 use std::path::Path;
 
@@ -55,6 +55,18 @@ impl Media {
 
             Some(Media{ptr: p})
         }
+    }
+
+    /// Add a slave (e.g. an external subtitle) to the media, before playback.
+    ///
+    /// `priority` is the slave priority (0 to 4). `uri` must be a URI (for
+    /// example `file:///path/to/subtitle.srt`).
+    pub fn slaves_add(&self, slave_type: SlaveType, priority: u32, uri: &str) -> Result<(), ()> {
+        let uri = to_cstr(uri);
+        let result = unsafe{
+            sys::libvlc_media_slaves_add(self.ptr, slave_type as u32, priority, uri.as_ptr())
+        };
+        if result == 0 { Ok(()) }else{ Err(()) }
     }
 
     pub fn mrl(&self) -> Option<String> {
