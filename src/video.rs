@@ -15,6 +15,22 @@ pub trait MediaPlayerVideoEx {
     fn get_fullscreen(&self) -> bool;
     fn set_key_input(&self, on: bool);
     fn set_mouse_input(&self, on: bool);
+    /// Set the callbacks used to render decoded video frames into user-provided buffers.
+    ///
+    /// `lock` is called to obtain a picture buffer (it must fill the `planes` array and
+    /// return the picture handle passed back to `unlock`/`display`), `unlock` is called
+    /// once a frame has been decoded into it, and `display` once it has been displayed.
+    /// The chroma and geometry are configured separately with `set_video_format`.
+    fn set_video_callbacks<L, U, D>(&self, lock: L, unlock: U, display: D)
+        where
+            L: Fn(*mut *mut c_void) -> *mut c_void + Send + 'static,
+            U: Fn(*mut c_void, *const *mut c_void) + Send + 'static,
+            D: Fn(*mut c_void) + Send + 'static;
+    /// Set the format of the frames produced by `set_video_callbacks`.
+    ///
+    /// `chroma` is a four-character code (e.g. `"RV32"`), `pitch` is the number of bytes
+    /// per line. Must be called before playback starts.
+    fn set_video_format(&self, chroma: &str, width: u32, height: u32, pitch: u32);
     fn get_size(&self, num: u32) -> Option<(u32, u32)>;
     fn get_video_track(&self) -> Option<i32>;
     fn set_video_track(&self, track: i32);
@@ -45,6 +61,34 @@ impl MediaPlayerVideoEx for MediaPlayer {
     }
     fn set_mouse_input(&self, on: bool) {
         unsafe{ sys::libvlc_video_set_mouse_input(self.ptr, if on { 1 }else{ 0 }); }
+    }
+    fn set_video_callbacks<L, U, D>(&self, lock: L, unlock: U, display: D)
+        where
+            L: Fn(*mut *mut c_void) -> *mut c_void + Send + 'static,
+            U: Fn(*mut c_void, *const *mut c_void) + Send + 'static,
+            D: Fn(*mut c_void) + Send + 'static,
+    {
+        let data = Box::new(VideoCallbacksData {
+            lock: Box::new(lock),
+            unlock: Box::new(unlock),
+            display: Box::new(display),
+        });
+        let data = Box::into_raw(data) as *mut c_void;
+
+        unsafe{
+            sys::libvlc_video_set_callbacks(
+                self.ptr,
+                Some(video_cb_lock),
+                Some(video_cb_unlock),
+                Some(video_cb_display),
+                data);
+        }
+    }
+    fn set_video_format(&self, chroma: &str, width: u32, height: u32, pitch: u32) {
+        let chroma = to_cstr(chroma);
+        unsafe{
+            sys::libvlc_video_set_format(self.ptr, chroma.as_ptr(), width, height, pitch);
+        }
     }
     fn get_size(&self, num: u32) -> Option<(u32, u32)> {
         unsafe{
@@ -121,4 +165,30 @@ impl MediaPlayerVideoEx for MediaPlayer {
     fn set_adjust_float(&self, option: VideoAdjustOption, value: f32) {
         unsafe{ sys::libvlc_video_set_adjust_float(self.ptr, option as u32, value); }
     }
+}
+
+// User callbacks passed to libvlc_video_set_callbacks.
+struct VideoCallbacksData {
+    lock: Box<dyn Fn(*mut *mut c_void) -> *mut c_void + Send + 'static>,
+    unlock: Box<dyn Fn(*mut c_void, *const *mut c_void) + Send + 'static>,
+    display: Box<dyn Fn(*mut c_void) + Send + 'static>,
+}
+
+unsafe extern "C" fn video_cb_lock(opaque: *mut c_void, planes: *mut *mut c_void) -> *mut c_void {
+    let data = &*(opaque as *const VideoCallbacksData);
+    (data.lock)(planes)
+}
+
+unsafe extern "C" fn video_cb_unlock(
+    opaque: *mut c_void,
+    picture: *mut c_void,
+    planes: *const *mut c_void,
+) {
+    let data = &*(opaque as *const VideoCallbacksData);
+    (data.unlock)(picture, planes)
+}
+
+unsafe extern "C" fn video_cb_display(opaque: *mut c_void, picture: *mut c_void) {
+    let data = &*(opaque as *const VideoCallbacksData);
+    (data.display)(picture)
 }

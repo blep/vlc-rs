@@ -161,6 +161,14 @@ impl MediaPlayer {
         }
     }
 
+    /// Get the current movie length (in ms).
+    pub fn get_length(&self) -> Option<i64> {
+        unsafe{
+            let l = sys::libvlc_media_player_get_length(self.ptr);
+            if l == -1 { None }else{ Some(l) }
+        }
+    }
+
     /// Set the movie time (in ms).
     /// This has no effect if no media is being played. Not all formats and protocols support this.
     pub fn set_time(&self, time: i64) {
